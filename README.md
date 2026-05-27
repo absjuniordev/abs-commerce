@@ -1,5 +1,11 @@
 # Nexora — Commerce Platform API
 
+![Java](https://img.shields.io/badge/Java-17-orange)
+![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.x-green)
+![Status](https://img.shields.io/badge/status-in%20development-yellow)
+![License](https://img.shields.io/badge/license-MIT-blue)
+
+
 > Modern e-commerce API built with Java and Spring Boot, focused on scalability, clean architecture, and real-world business rules.
 
 ---
@@ -8,7 +14,7 @@
 
 Nexora is a backend application designed to simulate a modern commerce platform.
 
-The project was created to study and apply concepts used in professional systems such as:
+Nexora is a backend commerce platform focused on applying real-world architecture and scalable backend patterns using Spring Boot.
 
 * REST APIs
 * Domain modeling
@@ -166,7 +172,7 @@ This project was built to deepen knowledge in:
 ## Clone the repository
 
 ```bash
-git clone https://github.com/your-username/nexora.git
+git clone https://github.com/absjuniordev/nexora.git
 ```
 
 ## Run the application
@@ -200,8 +206,7 @@ Nexora is continuously evolving as new concepts and improvements are implemented
 
 # 👨‍💻 Author
 
-Developed by Dev.
-
+Developed by Arnaldo Junior
 ---
 
 # 📄 License
