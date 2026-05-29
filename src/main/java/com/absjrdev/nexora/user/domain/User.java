@@ -1,6 +1,7 @@
 package com.absjrdev.nexora.user.domain;
 
-import com.absjrdev.nexora.order.Order;
+import com.absjrdev.nexora.order.domain.Order;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -21,6 +22,7 @@ class User implements Serializable { //cadeia de bytes
     private String phone;
     private String password;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "client")
     private
     List<Order> orders = new ArrayList<>() ;
