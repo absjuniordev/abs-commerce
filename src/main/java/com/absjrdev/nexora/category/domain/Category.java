@@ -1,6 +1,7 @@
 package com.absjrdev.nexora.category.domain;
 
 import com.absjrdev.nexora.product.domain.Product;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -17,7 +18,8 @@ public class Category implements Serializable {
     private Long id;
     private String name;
 
-
+    @JsonIgnore
+    @ManyToMany(mappedBy = "categories")
     private Set<Product> products = new HashSet<Product>();
 
     public Category(){
@@ -45,6 +47,7 @@ public class Category implements Serializable {
         this.name = name;
     }
 
+    @ManyToMany(mappedBy = "categories")
     public Set<Product> getProducts() {
         return products;
     }
