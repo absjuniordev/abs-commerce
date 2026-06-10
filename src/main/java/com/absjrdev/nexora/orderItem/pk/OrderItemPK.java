@@ -1,4 +1,4 @@
-package com.absjrdev.nexora.category.orderItem;
+package com.absjrdev.nexora.orderItem.pk;
 
 import com.absjrdev.nexora.order.domain.Order;
 import com.absjrdev.nexora.product.domain.Product;

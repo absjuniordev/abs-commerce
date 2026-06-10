@@ -1,8 +1,9 @@
-package com.absjrdev.nexora.category.orderItem.domain;
+package com.absjrdev.nexora.orderItem.domain;
 
-import com.absjrdev.nexora.category.orderItem.OrderItemPK;
+import com.absjrdev.nexora.orderItem.pk.OrderItemPK;
 import com.absjrdev.nexora.order.domain.Order;
 import com.absjrdev.nexora.product.domain.Product;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -15,7 +16,7 @@ import java.util.Objects;
 public class OrderItem implements Serializable {
 
     @EmbeddedId
-    private OrderItemPK id ;
+    private OrderItemPK id = new OrderItemPK();
 
     private Integer quantity;
     private Double price;
@@ -29,6 +30,7 @@ public class OrderItem implements Serializable {
         this.price = price;
     }
 
+    @JsonIgnore
     public Order getOrder() {
         return id.getOrder();
     }
