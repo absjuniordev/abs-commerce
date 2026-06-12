@@ -2,6 +2,7 @@ package com.absjrdev.nexora.order.domain;
 
 import com.absjrdev.nexora.orderItem.domain.OrderItem;
 import com.absjrdev.nexora.order.domain.orderStatus.OrderStatus;
+import com.absjrdev.nexora.payment.Payment;
 import com.absjrdev.nexora.user.domain.User;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
@@ -33,6 +34,9 @@ class Order implements Serializable {
 
     @OneToMany(mappedBy = "id.order")
     private Set<OrderItem> items = new HashSet<>();
+
+    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)//same id
+    private Payment payment;
 
     public Order() {
     }
@@ -80,6 +84,16 @@ class Order implements Serializable {
 
     public Set<OrderItem> getItems() {
         return items;
+    }
+
+    public
+    Payment getPayment() {
+        return payment;
+    }
+
+    public
+    void setPayment(Payment payment) {
+        this.payment = payment;
     }
 
     @Override
