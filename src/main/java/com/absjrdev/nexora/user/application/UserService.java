@@ -19,16 +19,33 @@ class UserService {
         return userRepository.findAll();
     }
 
-    public User findById(Long id) {
+    public
+    User findById(Long id) {
         return userRepository.findById(id).get();
     }
 
-    public User insert(User obj){
+    public
+    User insert(User obj) {
         return userRepository.save(obj);
     }
 
-    public void delete (Long id){
+    public
+    void delete(Long id) {
         userRepository.deleteById(id);
+    }
+
+    public
+    User update(Long id, User obj) {
+        User entity = userRepository.getReferenceById(id);
+        updateDat(entity, obj);
+        return userRepository.save(entity);
+    }
+
+    private
+    void updateDat(User entity, User obj) {
+        entity.setName(obj.getName());
+        entity.setEmail(obj.getEmail());
+        entity.setPhone(obj.getPhone());
     }
 
 }
