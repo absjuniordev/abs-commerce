@@ -1,5 +1,6 @@
 package com.absjrdev.nexora.user.application;
 
+import com.absjrdev.nexora.exception.ResourceNotFoundException;
 import com.absjrdev.nexora.user.domain.User;
 import com.absjrdev.nexora.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ class UserService {
 
     public
     User findById(Long id) {
-        return userRepository.findById(id).get();
+        return userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found. id: " +id));
     }
 
     public

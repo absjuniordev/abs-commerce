@@ -1,4 +1,4 @@
-package com.absjrdev.nexora.payment;
+package com.absjrdev.nexora.payment.domain;
 
 import com.absjrdev.nexora.order.domain.Order;
 import com.fasterxml.jackson.annotation.JsonIgnore;

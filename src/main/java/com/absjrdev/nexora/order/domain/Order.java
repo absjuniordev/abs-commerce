@@ -2,7 +2,7 @@ package com.absjrdev.nexora.order.domain;
 
 import com.absjrdev.nexora.orderItem.domain.OrderItem;
 import com.absjrdev.nexora.order.domain.orderStatus.OrderStatus;
-import com.absjrdev.nexora.payment.Payment;
+import com.absjrdev.nexora.payment.domain.Payment;
 import com.absjrdev.nexora.user.domain.User;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;

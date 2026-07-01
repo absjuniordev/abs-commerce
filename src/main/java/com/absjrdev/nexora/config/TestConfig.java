@@ -7,7 +7,7 @@ import com.absjrdev.nexora.order.domain.Order;
 import com.absjrdev.nexora.order.domain.orderStatus.OrderStatus;
 import com.absjrdev.nexora.order.repository.OrderRepository;
 import com.absjrdev.nexora.orderItem.repository.OrderItemRepository;
-import com.absjrdev.nexora.payment.Payment;
+import com.absjrdev.nexora.payment.domain.Payment;
 import com.absjrdev.nexora.product.domain.Product;
 import com.absjrdev.nexora.product.repository.ProductRepository;
 import com.absjrdev.nexora.user.domain.User;
