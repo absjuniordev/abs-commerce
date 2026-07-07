@@ -1,9 +1,12 @@
 package com.absjrdev.nexora.user.application;
 
+import com.absjrdev.nexora.exception.DatabaseException;
 import com.absjrdev.nexora.exception.ResourceNotFoundException;
 import com.absjrdev.nexora.user.domain.User;
 import com.absjrdev.nexora.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,7 +25,7 @@ class UserService {
 
     public
     User findById(Long id) {
-        return userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found. id: " +id));
+        return userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found. id: " + id));
     }
 
     public
@@ -32,7 +35,15 @@ class UserService {
 
     public
     void delete(Long id) {
-        userRepository.deleteById(id);
+
+        if (!userRepository.existsById(id)) {
+            throw new ResourceNotFoundException("User not found. Id: " + id);
+        }
+        try {
+            userRepository.deleteById(id);
+        } catch (DataIntegrityViolationException ex) {
+            throw new DatabaseException(ex.getMessage());
+        }
     }
 
     public
