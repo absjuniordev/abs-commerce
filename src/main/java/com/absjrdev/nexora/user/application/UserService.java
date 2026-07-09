@@ -4,6 +4,7 @@ import com.absjrdev.nexora.exception.DatabaseException;
 import com.absjrdev.nexora.exception.ResourceNotFoundException;
 import com.absjrdev.nexora.user.domain.User;
 import com.absjrdev.nexora.user.repository.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -35,7 +36,6 @@ class UserService {
 
     public
     void delete(Long id) {
-
         if (!userRepository.existsById(id)) {
             throw new ResourceNotFoundException("User not found. Id: " + id);
         }
@@ -48,9 +48,13 @@ class UserService {
 
     public
     User update(Long id, User obj) {
+    try {
         User entity = userRepository.getReferenceById(id);
         updateDat(entity, obj);
         return userRepository.save(entity);
+    } catch (EntityNotFoundException e) {
+          throw new ResourceNotFoundException("Resource not found. Id: " + id);
+    }
     }
 
     private
