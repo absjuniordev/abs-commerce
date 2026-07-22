@@ -9,7 +9,7 @@
 		<relativePath/>
 	</parent>
 	<groupId>com.absjrdev</groupId>
-	<artifactId>nexora</artifactId>
+	<artifactId>abs-commerce</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>nexora</name>
 	<description>Projeto Nexora</description>
