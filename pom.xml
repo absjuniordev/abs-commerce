@@ -11,8 +11,8 @@
 	<groupId>com.absjrdev</groupId>
 	<artifactId>abs-commerce</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>nexora</name>
-	<description>Projeto Nexora</description>
+	<name>abs-commerce</name>
+	<description>Projeto ABS Commerce API</description>
 
 	<properties>
 		<java.version>17</java.version>
