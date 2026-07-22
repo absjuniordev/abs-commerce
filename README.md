@@ -1,59 +1,61 @@
-# Nexora — Commerce Platform API
+# ABS Commerce — E-Commerce Platform API
 
 ![Java](https://img.shields.io/badge/Java-17-orange)
 ![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.x-green)
 ![Status](https://img.shields.io/badge/status-in%20development-yellow)
 ![License](https://img.shields.io/badge/license-MIT-blue)
 
-
-> Modern e-commerce API built with Java and Spring Boot, focused on scalability, clean architecture, and real-world business rules.
+> Modern e-commerce backend API built with Java and Spring Boot, focused on clean architecture, scalability, and real-world business rules.
 
 ---
 
 ## 🚀 About the Project
 
-Nexora is a backend application designed to simulate a modern commerce platform.
+**ABS Commerce** is a backend application that simulates a modern e-commerce platform.
 
-Nexora is a backend commerce platform focused on applying real-world architecture and scalable backend patterns using Spring Boot.
+The project was created as part of the **ABS — Application Backend Solutions** portfolio, with the goal of applying enterprise-level backend development practices using Java and Spring Boot.
 
-* REST APIs
-* Domain modeling
-* Database relationships
-* Order processing
-* Payment flow
-* Clean architecture
-* Scalability concepts
+Current focus:
 
-Although it starts as a study project, the goal is to evolve Nexora into a more complete and robust platform over time.
+- RESTful APIs
+- Domain-driven modeling
+- Database relationships
+- Order processing
+- Payment workflow
+- Layered architecture
+- Scalability concepts
+- Clean Code principles
+
+Although it started as a learning project, ABS Commerce is continuously evolving into a production-inspired backend application.
 
 ---
 
 # 🧠 Domain Overview
 
-The system is based on a real-world e-commerce structure.
+The system is based on a real-world e-commerce architecture.
 
 ### Main Entities
 
-* User
-* Product
-* Category
-* Order
-* OrderItem
-* Payment
+- User
+- Product
+- Category
+- Order
+- OrderItem
+- Payment
 
 ### Business Rules
 
-* A user can have multiple orders
-* An order can contain multiple products
-* Products can belong to multiple categories
-* Orders may contain payment information
-* Orders have status control:
+- A user can have multiple orders.
+- An order can contain multiple products.
+- Products can belong to multiple categories.
+- Orders may contain payment information.
+- Orders have lifecycle status control:
 
-  * WAITING_PAYMENT
-  * PAID
-  * SHIPPED
-  * DELIVERED
-  * CANCELED
+  - WAITING_PAYMENT
+  - PAID
+  - SHIPPED
+  - DELIVERED
+  - CANCELED
 
 ---
 
@@ -61,33 +63,40 @@ The system is based on a real-world e-commerce structure.
 
 ## Backend
 
-* Java
-* Spring Boot
-* Spring Data JPA
-* Hibernate
-* Maven
+- Java 17
+- Spring Boot
+- Spring Data JPA
+- Hibernate
+- Maven
 
 ## Database
 
-* H2 Database
-* PostgreSQL *(future implementation)*
+- H2 Database
+- PostgreSQL *(planned)*
 
 ---
 
 # 📐 Architecture
 
-The project follows a layered architecture pattern:
+The project follows a layered architecture:
 
 ```text
-Controller → Service → Repository → Database
+Controller
+    ↓
+Service
+    ↓
+Repository
+    ↓
+Database
 ```
 
-Main goals:
+Design principles:
 
-* separation of responsibilities
-* maintainability
-* scalability
-* clean code practices
+- Separation of responsibilities
+- Maintainability
+- Scalability
+- Clean Code
+- SOLID principles
 
 ---
 
@@ -95,69 +104,45 @@ Main goals:
 
 ## Current Features
 
-* Product management
-* Category management
-* User management
-* Order management
-* Payment relationship
-* Order status control
-* Entity relationships with JPA
-* REST endpoints
+- User management
+- Product management
+- Category management
+- Order management
+- Payment relationship
+- Order status management
+- RESTful API endpoints
+- JPA entity relationships
 
 ---
 
-# 🔮 Future Improvements
+# 🔮 Roadmap
 
-The project will continue evolving with new features and infrastructure improvements.
+Planned improvements include:
 
-## Planned Features
-
-* Authentication & Authorization (JWT)
-* Docker support
-* PostgreSQL integration
-* Cloud deployment
-* Pagination and filtering
-* Validation handling
-* Exception handling
-* API documentation with Swagger/OpenAPI
-
----
-
-# ⚙️ CI/CD Pipeline *(Planned)*
-
-Future versions will include a complete CI/CD pipeline using GitHub Actions.
-
-## Planned pipeline stages
-
-* Build automation
-* Unit tests execution
-* Code validation
-* Automated deployment
-* Quality checks
-
----
-
-# 🌍 Internationalization *(Planned)*
-
-Future versions will also support localization and multilingual responses.
-
-Planned languages:
-
-* English
-* Portuguese
+- JWT Authentication & Authorization
+- Swagger / OpenAPI documentation
+- Validation handling
+- Global exception handling
+- Docker & Docker Compose
+- PostgreSQL integration
+- Unit and integration tests
+- CI/CD with GitHub Actions
+- Cloud deployment
+- Pagination & filtering
 
 ---
 
 # 📚 Learning Goals
 
-This project was built to deepen knowledge in:
+This project was developed to strengthen practical knowledge in:
 
-* Object-Oriented Programming
-* RESTful API development
-* Relational database modeling
-* Spring ecosystem
-* Backend architecture
-* Enterprise application concepts
+- Object-Oriented Programming
+- Spring Boot
+- RESTful API development
+- Relational database modeling
+- Enterprise backend architecture
+- Clean Architecture
+- Software design principles
 
 ---
 
@@ -165,14 +150,14 @@ This project was built to deepen knowledge in:
 
 ## Requirements
 
-* Java 17+
-* Maven
-* IDE (IntelliJ IDEA recommended)
+- Java 17+
+- Maven
+- IntelliJ IDEA (recommended)
 
 ## Clone the repository
 
 ```bash
-git clone https://github.com/absjuniordev/nexora.git
+git clone https://github.com/absjrdev/abs-commerce.git
 ```
 
 ## Run the application
@@ -188,27 +173,38 @@ git clone https://github.com/absjuniordev/nexora.git
 Examples:
 
 ```http
-GET /products
-GET /orders
-GET /users
-POST /orders
+GET    /products
+GET    /orders
+GET    /users
+POST   /orders
 ```
+
+Complete API documentation will be available through Swagger.
 
 ---
 
 # 🧪 Project Status
 
-🚧 In development
+🚧 **In Development**
 
-Nexora is continuously evolving as new concepts and improvements are implemented.
+ABS Commerce is continuously evolving as new features, architectural improvements, and infrastructure components are implemented.
 
 ---
 
 # 👨‍💻 Author
 
-Developed by Arnaldo Junior
+Developed by **Arnaldo Borges dos Santos Junior**
+
+---
+
+## About ABS
+
+**ABS — Application Backend Solutions**
+
+A personal portfolio focused on building modern backend applications with Java, Spring Boot, and enterprise software engineering practices.
+
 ---
 
 # 📄 License
 
-This project is open-source and available for learning purposes.
+This project is licensed under the MIT License and is available for learning and educational purposes.
