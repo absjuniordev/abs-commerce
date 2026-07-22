@@ -1,4 +1,4 @@
-# ABS Commerce — E-Commerce Platform API
+# ABS Commerce API — E-Commerce Platform API
 
 ![Java](https://img.shields.io/badge/Java-17-orange)
 ![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.x-green)
