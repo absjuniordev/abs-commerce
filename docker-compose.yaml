@@ -21,7 +21,7 @@ services:
       - postgres-data:/var/lib/postgresql/data
 
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U postgres -d abs-commerce" ]
+      test: [ "CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB" ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -31,7 +31,7 @@ services:
       - abs-commerce-network
 
   api:
-
+    image: abs-commerce-api:1.0
     build:
       context: .
 
@@ -40,7 +40,8 @@ services:
     restart: unless-stopped
 
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
 
     ports:
       - "8080:8080"
@@ -60,3 +61,5 @@ volumes:
 
 networks:
   abs-commerce-network:
+
+#ddd
