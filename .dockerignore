@@ -1,0 +1,25 @@
+# Git
+.git
+.gitignore
+
+# IDEs
+.idea
+.vscode
+
+# Maven
+target
+
+# Logs
+*.log
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# Docker
+Dockerfile
+docker-compose.yml
+
+# Arquivos temporários
+*.tmp
+*.swp
