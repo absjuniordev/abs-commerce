@@ -163,7 +163,11 @@ Configuration:
 ```properties
 spring.profiles.active=test
 ```
+## Demo Data
 
+When running the application using the `test` profile, the database is automatically populated with sample data.
+
+This allows anyone to test the API immediately without manually creating entities.
 ---
 
 ## prod
@@ -257,14 +261,23 @@ SPRING_DATASOURCE_PASSWORD=postgres
 
 # 📖 API Documentation
 
-Swagger is available at:
+The API is documented using Swagger / OpenAPI.
 
-```
+Access:
+
 http://localhost:8080/swagger-ui/index.html
-```
 
-Future versions of this README will include screenshots and usage examples.
+## Swagger UI
 
+![Swagger Home](docs/images/swagger-home.png)
+
+### User Endpoints
+
+![Users](docs/images/swagger-users.png)
+
+### Product Endpoints
+
+![Products](docs/images/swagger-products.png)
 ---
 
 # 📈 Roadmap
