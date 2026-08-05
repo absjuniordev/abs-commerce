@@ -24,7 +24,7 @@ import java.util.Arrays;
 @Profile("test")
 //@Profile("dev")
 public
-class TestConfig implements CommandLineRunner {//
+class TestDatabaseSeeder implements CommandLineRunner {//
 
     @Autowired
     private UserRepository userRepository;
