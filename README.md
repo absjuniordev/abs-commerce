@@ -1,40 +1,49 @@
-# ABS Commerce API — E-Commerce Platform API
+# ABS Commerce API
 
 ![Java](https://img.shields.io/badge/Java-17-orange)
-![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.x-green)
+![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.x-6DB33F)
+![Maven](https://img.shields.io/badge/Maven-3.9-C71A36)
+![Docker](https://img.shields.io/badge/Docker-Ready-2496ED)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-17-4169E1)
+![H2](https://img.shields.io/badge/H2-Database-blue)
+![Swagger](https://img.shields.io/badge/OpenAPI-Swagger-85EA2D)
 ![Status](https://img.shields.io/badge/status-in%20development-yellow)
 ![License](https://img.shields.io/badge/license-MIT-blue)
 
-> Modern e-commerce backend API built with Java and Spring Boot, focused on clean architecture, scalability, and real-world business rules.
+---
+
+# 🚀 About
+
+**ABS Commerce API** is a backend application that simulates a modern e-commerce platform built with **Java** and **Spring Boot**.
+
+The project is part of the **ABS — Application Backend Solutions** portfolio and was created to demonstrate enterprise backend development practices, focusing on scalability, clean architecture, maintainability, and real-world business rules.
+
+Although developed as a learning project, the application follows professional software engineering principles and continues to evolve with new features and infrastructure improvements.
 
 ---
 
-## 🚀 About the Project
+# ✨ Features
 
-**ABS Commerce** is a backend application that simulates a modern e-commerce platform.
+Current implemented features:
 
-The project was created as part of the **ABS — Application Backend Solutions** portfolio, with the goal of applying enterprise-level backend development practices using Java and Spring Boot.
-
-Current focus:
-
-- RESTful APIs
-- Domain-driven modeling
-- Database relationships
-- Order processing
-- Payment workflow
-- Layered architecture
-- Scalability concepts
-- Clean Code principles
-
-Although it started as a learning project, ABS Commerce is continuously evolving into a production-inspired backend application.
+- User Management
+- Product Management
+- Category Management
+- Order Management
+- Payment Association
+- Order Status Management
+- RESTful API
+- Layered Architecture
+- Docker Support
+- PostgreSQL Integration
+- H2 Database for Testing
+- Swagger / OpenAPI Documentation
 
 ---
 
-# 🧠 Domain Overview
+# 🏛 Domain Model
 
-The system is based on a real-world e-commerce architecture.
-
-### Main Entities
+Main entities:
 
 - User
 - Product
@@ -43,124 +52,180 @@ The system is based on a real-world e-commerce architecture.
 - OrderItem
 - Payment
 
-### Business Rules
+Business rules:
 
-- A user can have multiple orders.
-- An order can contain multiple products.
-- Products can belong to multiple categories.
+- One user can have multiple orders.
+- Orders can contain multiple products.
+- Products belong to multiple categories.
 - Orders may contain payment information.
-- Orders have lifecycle status control:
+- Orders have lifecycle status management.
 
-  - WAITING_PAYMENT
-  - PAID
-  - SHIPPED
-  - DELIVERED
-  - CANCELED
+Order status:
+
+- WAITING_PAYMENT
+- PAID
+- SHIPPED
+- DELIVERED
+- CANCELED
 
 ---
 
-# 🛠️ Technologies
+# 🛠 Technologies
 
 ## Backend
 
 - Java 17
-- Spring Boot
+- Spring Boot 3
 - Spring Data JPA
 - Hibernate
 - Maven
 
 ## Database
 
-- H2 Database
-- PostgreSQL *(planned)*
+- PostgreSQL (Production)
+- H2 Database (Testing)
+
+## Infrastructure
+
+- Docker
+- Docker Compose
+
+## Documentation
+
+- Swagger / OpenAPI
 
 ---
 
-# 📐 Architecture
+# 📂 Project Structure
 
-The project follows a layered architecture:
+```text
+src
+└── main
+    └── java
+        └── com.absjrdev.abscommerce
+            ├── category
+            ├── config
+            ├── exception
+            ├── order
+            ├── orderItem
+            ├── payment.domain
+            ├── product
+            ├── user
+            └── AbsCommerceApplication
+```
+
+> As the project evolves, new packages such as DTOs, validation, security, and services will be introduced.
+
+---
+
+# 🏗 Architecture
+
+The project follows a layered architecture.
 
 ```text
 Controller
-    ↓
+     │
+     ▼
 Service
-    ↓
+     │
+     ▼
 Repository
-    ↓
+     │
+     ▼
 Database
 ```
 
 Design principles:
 
-- Separation of responsibilities
-- Maintainability
-- Scalability
+- Separation of Concerns
+- SOLID Principles
 - Clean Code
-- SOLID principles
+- Layered Architecture
+- Scalability
+- Maintainability
 
 ---
 
-# 📦 Features
+# ⚙ Application Profiles
 
-## Current Features
+The application currently supports two Spring profiles.
 
-- User management
-- Product management
-- Category management
-- Order management
-- Payment relationship
-- Order status management
-- RESTful API endpoints
-- JPA entity relationships
+## test
 
----
+Used during development.
 
-# 🔮 Roadmap
+Database:
 
-Planned improvements include:
+- H2 In-Memory Database
 
-- JWT Authentication & Authorization
-- Swagger / OpenAPI documentation
-- Validation handling
-- Global exception handling
-- Docker & Docker Compose
-- PostgreSQL integration
-- Unit and integration tests
-- CI/CD with GitHub Actions
-- Cloud deployment
-- Pagination & filtering
+Configuration:
+
+```properties
+spring.profiles.active=test
+```
 
 ---
 
-# 📚 Learning Goals
+## prod
 
-This project was developed to strengthen practical knowledge in:
+Used for production and Docker environments.
 
-- Object-Oriented Programming
-- Spring Boot
-- RESTful API development
-- Relational database modeling
-- Enterprise backend architecture
-- Clean Architecture
-- Software design principles
+Database:
+
+- PostgreSQL
+
+Configuration:
+
+```properties
+spring.profiles.active=prod
+```
 
 ---
 
-# ▶️ Running the Project
+# 🐳 Running with Docker
 
-## Requirements
-
-- Java 17+
-- Maven
-- IntelliJ IDEA (recommended)
-
-## Clone the repository
+Clone the repository.
 
 ```bash
 git clone https://github.com/absjrdev/abs-commerce.git
+
+cd abs-commerce
 ```
 
-## Run the application
+Create your environment file.
+
+```bash
+cp .env.example .env
+```
+
+Build and start the application.
+
+```bash
+docker compose up --build
+```
+
+The API will be available at:
+
+```
+http://localhost:8080
+```
+
+Swagger UI:
+
+```
+http://localhost:8080/swagger-ui/index.html
+```
+
+---
+
+# 💻 Running Locally
+
+Requirements:
+
+- Java 17
+- Maven
+
+Run:
 
 ```bash
 ./mvnw spring-boot:run
@@ -168,43 +233,85 @@ git clone https://github.com/absjrdev/abs-commerce.git
 
 ---
 
-# 📡 API Endpoints
+# 🔑 Environment Variables
 
-Examples:
+Example:
 
-```http
-GET    /products
-GET    /orders
-GET    /users
-POST   /orders
+```properties
+POSTGRES_DB=abs-commerce
+
+POSTGRES_USER=postgres
+
+POSTGRES_PASSWORD=postgres
+
+SPRING_PROFILES_ACTIVE=prod
+
+SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/abs-commerce
+
+SPRING_DATASOURCE_USERNAME=postgres
+
+SPRING_DATASOURCE_PASSWORD=postgres
 ```
-
-Complete API documentation will be available through Swagger.
 
 ---
 
-# 🧪 Project Status
+# 📖 API Documentation
 
-🚧 **In Development**
+Swagger is available at:
 
-ABS Commerce is continuously evolving as new features, architectural improvements, and infrastructure components are implemented.
+```
+http://localhost:8080/swagger-ui/index.html
+```
+
+Future versions of this README will include screenshots and usage examples.
+
+---
+
+# 📈 Roadmap
+
+## Completed
+
+- REST API
+- Spring Boot
+- PostgreSQL
+- H2 Database
+- Docker
+- Docker Compose
+- Swagger
+- Entity Relationships
+
+## In Progress
+
+- DTO Layer
+- Validation
+- JWT Authentication
+- Exception Handling Improvements
+- Unit Tests
+- Integration Tests
+
+## Planned
+
+- GitHub Actions (CI/CD)
+- Docker Hub Automated Builds
+- Kubernetes
+- Cloud Deployment
+- Monitoring
+- Logging Improvements
 
 ---
 
 # 👨‍💻 Author
 
-Developed by **Arnaldo Borges dos Santos Junior**
+**Arnaldo Borges dos Santos Junior**
 
----
+Backend Developer
 
-## About ABS
+GitHub:
 
-**ABS — Application Backend Solutions**
-
-A personal portfolio focused on building modern backend applications with Java, Spring Boot, and enterprise software engineering practices.
+https://github.com/absjrdev
 
 ---
 
 # 📄 License
 
-This project is licensed under the MIT License and is available for learning and educational purposes.
+This project is licensed under the MIT License.
