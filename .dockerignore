@@ -2,23 +2,22 @@
 .git
 .gitignore
 
-# IDEs
+# IDE
 .idea
 .vscode
 
 # Maven
-target
+target/
+
+# Arquivos de ambiente
+.env
 
 # Logs
 *.log
 
-# Sistema operacional
+# Sistema Operacional
 .DS_Store
 Thumbs.db
-
-# Docker
-Dockerfile
-docker-compose.yml
 
 # Arquivos temporários
 *.tmp
