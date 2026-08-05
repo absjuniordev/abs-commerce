@@ -284,6 +284,12 @@ http://localhost:8080/swagger-ui/index.html
 ![Products](docs/images/swagger-products.png)
 ---
 
+# 🗄 Database
+
+PostgreSQL database running inside Docker.
+
+![Database](docs/images/database.png)
+
 # 📈 Roadmap
 
 ## Completed
