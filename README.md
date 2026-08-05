@@ -208,6 +208,10 @@ Build and start the application.
 docker compose up --build
 ```
 
+Application running with Docker Compose.
+
+![Docker Desktop](docs/images/docker-desktop.png)
+
 The API will be available at:
 
 ```
