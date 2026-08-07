@@ -325,16 +325,20 @@ PostgreSQL database running inside Docker.
 
 # 👨‍💻 Author
 
-**Arnaldo Borges dos Santos Junior**
+Developed by **Arnaldo Borges dos Santos Junior**
 
 Backend Developer
 
-GitHub:
+---
 
-https://github.com/absjrdev
+## About ABS
+
+**ABS — Application Backend Solutions**
+
+A personal portfolio focused on building modern backend applications with Java, Spring Boot, and enterprise software engineering practices.
 
 ---
 
 # 📄 License
 
-This project is licensed under the MIT License.
+This project is licensed under the MIT License and is available for learning and educational purposes.
