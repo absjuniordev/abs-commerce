@@ -49,7 +49,7 @@ class UserService {
     User update(Long id, User obj) {
     try {
         User entity = userRepository.getReferenceById(id);
-        updateDat(entity, obj);
+        updateData(entity, obj);
         return userRepository.save(entity);
     } catch (EntityNotFoundException e) {
           throw new ResourceNotFoundException("Resource not found. Id: " + id);
@@ -57,7 +57,7 @@ class UserService {
     }
 
     private
-    void updateDat(User entity, User obj) {
+    void updateData(User entity, User obj) {
         entity.setName(obj.getName());
         entity.setEmail(obj.getEmail());
         entity.setPhone(obj.getPhone());

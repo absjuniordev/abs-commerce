@@ -2,6 +2,8 @@ package com.absjrdev.abscommerce.user.api;
 
 import com.absjrdev.abscommerce.user.application.UserService;
 import com.absjrdev.abscommerce.user.domain.User;
+import com.absjrdev.abscommerce.user.dto.UserRequestDTO;
+import com.absjrdev.abscommerce.user.dto.UserResponseDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +30,13 @@ class UserController {
     )
     @GetMapping
     public
-    ResponseEntity<List<User>> findAll() {
-        List<User> list = userService.findAll();
+    ResponseEntity<List<UserResponseDTO>> findAll() {
+
+        List<UserResponseDTO> list = userService.findAll()
+                .stream()
+                .map(this::toResponseDTO)
+                .toList();
+
         return ResponseEntity.ok().body(list);
     }
 
@@ -39,9 +46,9 @@ class UserController {
     )
     @GetMapping(value = "/{id}")
     public
-    ResponseEntity<User> findById(@PathVariable Long id) {
+    ResponseEntity<UserResponseDTO> findById(@PathVariable Long id) {
         User user = userService.findById(id);
-        return ResponseEntity.ok().body(user);
+        return ResponseEntity.ok().body(toResponseDTO(user));
     }
 
     @Operation(
@@ -49,10 +56,20 @@ class UserController {
             description = "Creates a new user in the system."
     )
     @PostMapping
-    public ResponseEntity<User> insert(@RequestBody User obj){
-        obj = userService.insert(obj);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
-        return ResponseEntity.created(uri).body(obj);
+    public ResponseEntity<UserResponseDTO> insert(@RequestBody UserRequestDTO dto){
+        User user = toEntity(dto);
+
+        user = userService.insert(user);
+
+        URI uri = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(user.getId())
+                .toUri();
+
+        return ResponseEntity
+                .created(uri)
+                .body(toResponseDTO(user));
     }
 
     @Operation(
@@ -70,9 +87,32 @@ class UserController {
             description = "Updates the information of an existing user identified by the provided ID."
     )
     @PutMapping(value = "/{id}")
-    public ResponseEntity<User> update(@PathVariable Long id, @RequestBody User obj){
-        obj = userService.update(id, obj);
-        return ResponseEntity.ok().body(obj);
+    public ResponseEntity<UserResponseDTO> update(@PathVariable Long id, @RequestBody UserRequestDTO  dto){
+        User user = toEntity(dto);
+
+        user = userService.update(id, user);
+
+        return ResponseEntity.ok().body(toResponseDTO(user));
+    }
+    private UserResponseDTO toResponseDTO(User user) {
+
+        return new UserResponseDTO(
+                user.getId(),
+                user.getName(),
+                user.getEmail(),
+                user.getPhone()
+        );
+    }
+
+    private User toEntity(UserRequestDTO dto) {
+
+        return new User(
+                null,
+                dto.name(),
+                dto.email(),
+                dto.phone(),
+                dto.password()
+        );
     }
 
 }
