@@ -18,7 +18,7 @@ public class Product implements Serializable {
     private String name;
     private String description;
     private Double price;
-    private String imgUr;
+    private String imgUrl;
 
     @ManyToMany
     @JoinTable(name = "tb_product_category",
@@ -36,7 +36,7 @@ public class Product implements Serializable {
         this.name = name;
         this.description = description;
         this.price = price;
-        this.imgUr = imgUr;
+        this.imgUrl = imgUr;
     }
 
     public Long getId() {
@@ -71,12 +71,12 @@ public class Product implements Serializable {
         this.price = price;
     }
 
-    public String getImgUr() {
-        return imgUr;
+    public String getImgUrl() {
+        return imgUrl;
     }
 
-    public void setImgUr(String imgUr) {
-        this.imgUr = imgUr;
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
     }
 
     public Set<Category> getCategories() {
