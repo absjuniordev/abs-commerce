@@ -2,6 +2,8 @@ package com.absjrdev.abscommerce.category.api;
 
 import com.absjrdev.abscommerce.category.application.CategoryService;
 import com.absjrdev.abscommerce.category.domain.Category;
+import com.absjrdev.abscommerce.category.dto.CategoryRequestDTO;
+import com.absjrdev.abscommerce.category.dto.CategoryResponseDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,21 +29,23 @@ class CategoryController {
     )
     @GetMapping
     public
-    ResponseEntity<List<Category>> findAll() {
-        List<Category> list = categoryService.findAll();
+    ResponseEntity<List<CategoryResponseDTO>> findAll() {
+        List<CategoryResponseDTO> list = categoryService.findAll()
+                .stream()
+                .map(this::toResponseDTO)
+                .toList();
         return ResponseEntity.ok().body(list);
     }
 
-
-    @Operation(
+       @Operation(
             summary = "Retrieve a category by ID",
             description = "Returns the details of a category identified by the provided ID."
     )
     @GetMapping(value = "/{id}")
     public
-    ResponseEntity<Category> findById(@PathVariable Long id) {
+    ResponseEntity<CategoryResponseDTO> findById(@PathVariable Long id) {
         Category category = categoryService.findById(id);
-        return ResponseEntity.ok().body(category);
+        return ResponseEntity.ok().body(toResponseDTO(category));
     }
 
 
@@ -51,16 +55,17 @@ class CategoryController {
     )
     @PostMapping
     public
-    ResponseEntity<Category> insert(@RequestBody Category category) {
-        Category entity = categoryService.insert(category);
+    ResponseEntity<CategoryResponseDTO> insert(@RequestBody CategoryRequestDTO dto) {
+        Category category = toEntity(dto);
 
+        category = categoryService.insert(category);
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(category.getId())
                 .toUri();
 
-        return ResponseEntity.created(uri).body(entity);
+        return ResponseEntity.created(uri).body(toResponseDTO(category));
     }
 
     @Operation(
@@ -68,13 +73,15 @@ class CategoryController {
             description = "Updates the information of an existing category."
     )
     @PutMapping(value = "/{id}")
-    public ResponseEntity<Category> update(
+    public ResponseEntity<CategoryResponseDTO> update(
             @PathVariable Long id,
-            @RequestBody Category category) {
+            @RequestBody CategoryRequestDTO dto) {
+
+        Category category = toEntity(dto);
 
         category = categoryService.update(id, category);
 
-        return ResponseEntity.ok().body(category);
+        return ResponseEntity.ok().body(toResponseDTO(category));
     }
 
     @Operation(
@@ -88,5 +95,23 @@ class CategoryController {
 
         return ResponseEntity.noContent().build();
     }
+
+    private CategoryResponseDTO toResponseDTO(Category category) {
+
+        return new CategoryResponseDTO(
+                category.getId(),
+                category.getName()
+        );
+    }
+
+
+    private Category toEntity(CategoryRequestDTO dto) {
+
+        return new Category(
+                null,
+                dto.name()
+        );
+    }
+
 }
 
