@@ -2,6 +2,8 @@ package com.absjrdev.abscommerce.product.api;
 
 import com.absjrdev.abscommerce.product.application.ProductService;
 import com.absjrdev.abscommerce.product.domain.Product;
+import com.absjrdev.abscommerce.product.dto.ProductRequestDTO;
+import com.absjrdev.abscommerce.product.dto.ProductResponseDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,19 +27,23 @@ public class ProductController {
             description = "Retrieve a list of all registered products"
     )
     @GetMapping
-    public ResponseEntity<List<Product>> findAll() {
-        List<Product> products = productService.findAll();
-        return ResponseEntity.ok().body(products);
+    public ResponseEntity<List<ProductResponseDTO>> findAll() {
+        List<ProductResponseDTO> list = productService.findAll()
+                .stream()
+                .map(this::toResponseDTO)
+                .toList();
+        return ResponseEntity.ok().body(list);
     }
+
 
     @Operation(
             summary = "Retrieve a product by ID",
             description = "Returns the details of a product identified by the provided ID."
     )
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Product> findById(@PathVariable Long id) {
+    public ResponseEntity<ProductResponseDTO> findById(@PathVariable Long id) {
         Product product = productService.findById(id);
-        return ResponseEntity.ok().body(product);
+        return ResponseEntity.ok().body(toResponseDTO(product));
     }
 
     @Operation(
@@ -45,11 +51,19 @@ public class ProductController {
             description = "Creates a new Product in the system."
     )
     @PostMapping
-    public ResponseEntity<Product> insert(@RequestBody Product obj) {
-        obj = productService.insert(obj);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
-        return ResponseEntity.created(uri).body(obj);
+    public ResponseEntity<ProductResponseDTO> insert(@RequestBody ProductRequestDTO dto) {
+        Product product = toEntity(dto);
+
+        product = productService.insert(product);
+        URI uri = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(product.getId())
+                .toUri();
+
+        return ResponseEntity.created(uri).body(toResponseDTO(product));
     }
+
 
     @Operation(
             summary = "Delete a Product",
@@ -66,8 +80,35 @@ public class ProductController {
             description = "Updates the information of an existing Product identified by the provided ID."
     )
     @PutMapping(value = "/{id}")
-    public ResponseEntity<Product> update(@PathVariable Long id, @RequestBody Product obj) {
-        obj = productService.update(id, obj);
-        return ResponseEntity.ok().body(obj);
+    public ResponseEntity<ProductResponseDTO> update(@PathVariable Long id, @RequestBody ProductRequestDTO dto) {
+       Product product = toEntity(dto);
+
+       product = productService.update(id, product);
+
+        return ResponseEntity.ok().body(toResponseDTO(product));
     }
+
+    private ProductResponseDTO toResponseDTO(Product product) {
+
+        return new ProductResponseDTO(
+                product.getId(),
+                product.getName(),
+                product.getDescription(),
+                product.getPrice(),
+                product.getImgUrl()
+        );
+
+    }
+
+    private Product toEntity(ProductRequestDTO dto) {
+
+        return new Product(
+                null,
+                dto.name(),
+                dto.description(),
+                dto.price(),
+                dto.imgUrl()
+        );
+    }
+
 }
