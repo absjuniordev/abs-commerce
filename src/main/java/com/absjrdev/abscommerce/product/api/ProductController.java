@@ -1,5 +1,6 @@
 package com.absjrdev.abscommerce.product.api;
 
+import com.absjrdev.abscommerce.category.dto.CategoryResponseDTO;
 import com.absjrdev.abscommerce.product.application.ProductService;
 import com.absjrdev.abscommerce.product.domain.Product;
 import com.absjrdev.abscommerce.product.dto.ProductRequestDTO;
@@ -13,6 +14,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/products")
@@ -95,7 +97,12 @@ public class ProductController {
                 product.getName(),
                 product.getDescription(),
                 product.getPrice(),
-                product.getImgUrl()
+                product.getImgUrl(),
+                product.getCategories()
+                        .stream()
+                        .map(CategoryResponseDTO::new)
+                        .collect(Collectors.toSet())
+
         );
 
     }
