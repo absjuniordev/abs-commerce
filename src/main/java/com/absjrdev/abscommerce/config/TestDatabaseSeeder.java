@@ -8,6 +8,7 @@ import com.absjrdev.abscommerce.order.domain.orderStatus.OrderStatus;
 import com.absjrdev.abscommerce.order.repository.OrderRepository;
 import com.absjrdev.abscommerce.orderItem.repository.OrderItemRepository;
 import com.absjrdev.abscommerce.payment.domain.Payment;
+import com.absjrdev.abscommerce.payment.domain.paymentMethod.PaymentMethod;
 import com.absjrdev.abscommerce.product.domain.Product;
 import com.absjrdev.abscommerce.product.repository.ProductRepository;
 import com.absjrdev.abscommerce.user.domain.User;
@@ -86,7 +87,7 @@ class TestDatabaseSeeder implements CommandLineRunner {//
 
         orderItemRepository.saveAll(Arrays.asList(oi1, oi2, oi3, oi4));
 
-        Payment pay1 = new Payment(null,Instant.parse("2019-06-20T21:53:07Z"),o1 );
+        Payment pay1 = new Payment(null,Instant.parse("2019-06-20T21:53:07Z"),o1, PaymentMethod.CREDIT_CARD );
         o1.setPayment(pay1);
 
         orderRepository.save(o1);

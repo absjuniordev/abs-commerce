@@ -1,5 +1,6 @@
 package com.absjrdev.abscommerce.exception.handler;
 
+import com.absjrdev.abscommerce.exception.BusinessException;
 import com.absjrdev.abscommerce.exception.DatabaseException;
 import com.absjrdev.abscommerce.exception.ResourceNotFoundException;
 import com.absjrdev.abscommerce.exception.model.StandardError;
@@ -28,6 +29,15 @@ class GlobalExceptionHandler {
     public
     ResponseEntity<StandardError> handleDatabaseException(DatabaseException ex, HttpServletRequest request) {
         String error = "Database Error";
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        StandardError err = new StandardError(Instant.now(), status.value(), error, ex.getMessage(), request.getRequestURI());
+        return ResponseEntity.status(status).body(err);
+    }
+
+    @ExceptionHandler(BusinessException.class)
+    public
+    ResponseEntity<StandardError> handleBusinessException(BusinessException ex, HttpServletRequest request) {
+        String error = "Business Error";
         HttpStatus status = HttpStatus.BAD_REQUEST;
         StandardError err = new StandardError(Instant.now(), status.value(), error, ex.getMessage(), request.getRequestURI());
         return ResponseEntity.status(status).body(err);
