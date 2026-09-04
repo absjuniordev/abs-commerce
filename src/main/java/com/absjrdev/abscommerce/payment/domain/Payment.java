@@ -29,11 +29,11 @@ public class Payment implements Serializable {
     public Payment() {
     }
 
-    public Payment(Long id, Instant moment, Order order, PaymentMethod paymentMethod) {
+    public Payment(Long id, Instant moment, PaymentMethod paymentMethod, Order order) {
         this.id = id;
         this.moment = moment;
-        this.order = order;
         setPaymentMethod(paymentMethod);
+        this.order = order;
     }
 
     public Long getId() {

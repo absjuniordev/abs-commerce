@@ -4,6 +4,7 @@ import com.absjrdev.abscommerce.exception.BusinessException;
 import com.absjrdev.abscommerce.exception.ResourceNotFoundException;
 import com.absjrdev.abscommerce.order.domain.Order;
 import com.absjrdev.abscommerce.order.domain.orderStatus.OrderStatus;
+import com.absjrdev.abscommerce.order.dto.UpdateOrderStatusRequestDTO;
 import com.absjrdev.abscommerce.order.repository.OrderRepository;
 import com.absjrdev.abscommerce.payment.domain.Payment;
 import com.absjrdev.abscommerce.payment.dto.CreatePaymentRequestDTO;
@@ -42,12 +43,13 @@ public class PaymentService {
         Payment payment = new Payment(
                 null,
                 Instant.now(),
-                order,
-                request.paymentMethod());
+                request.paymentMethod(),
+                order);
 
         order.setPayment(payment);
         order.setOrderStatus(OrderStatus.PAID);
 
         return paymentRepository.save(payment);
     }
+
 }

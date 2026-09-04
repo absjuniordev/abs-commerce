@@ -4,6 +4,7 @@ import com.absjrdev.abscommerce.order.application.OrderService;
 import com.absjrdev.abscommerce.order.domain.Order;
 import com.absjrdev.abscommerce.order.dto.CreateOrderRequestDTO;
 import com.absjrdev.abscommerce.order.dto.OrderResponseDTO;
+import com.absjrdev.abscommerce.order.dto.UpdateOrderStatusRequestDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,5 +64,15 @@ public class OrderController {
         return ResponseEntity
                 .created(uri)
                 .body(new OrderResponseDTO(order));
+    }
+
+    @PostMapping(value = "/{id}/status")
+    public ResponseEntity<OrderResponseDTO> updateStatus(
+            @PathVariable Long id,
+            @RequestBody UpdateOrderStatusRequestDTO request ) {
+
+        Order order = orderService.updateStatus(id, request);
+
+        return ResponseEntity.ok(new OrderResponseDTO(order));
     }
 }

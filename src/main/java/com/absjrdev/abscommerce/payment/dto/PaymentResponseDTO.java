@@ -8,16 +8,16 @@ import java.time.Instant;
 public record PaymentResponseDTO(
         Long id,
         Instant moment,
-        Long orderId,
-        PaymentMethod paymentMethod
+        PaymentMethod paymentMethod,
+        Long orderId
 ) {
 
     public PaymentResponseDTO(Payment payment) {
         this(
                 payment.getId(),
                 payment.getMoment(),
-                payment.getOrder().getId(),
-                payment.getPaymentMethod()
+                payment.getPaymentMethod(),
+                payment.getOrder().getId()
         );
     }
 }
