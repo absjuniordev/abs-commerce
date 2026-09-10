@@ -1,5 +1,6 @@
 package com.absjrdev.abscommerce.product.api;
 
+import com.absjrdev.abscommerce.category.application.CategoryService;
 import com.absjrdev.abscommerce.category.dto.CategoryResponseDTO;
 import com.absjrdev.abscommerce.product.application.ProductService;
 import com.absjrdev.abscommerce.product.domain.Product;
@@ -23,6 +24,9 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private CategoryService categoryService;
 
     @Operation(
             summary = "Retrieve all products",
@@ -109,13 +113,22 @@ public class ProductController {
 
     private Product toEntity(ProductRequestDTO dto) {
 
-        return new Product(
+        Product product = new Product(
                 null,
                 dto.name(),
                 dto.description(),
                 dto.price(),
                 dto.imgUrl()
         );
+
+        product.getCategories().addAll(
+                dto.categoryIds()
+                        .stream()
+                        .map(categoryService::findById)
+                        .collect(Collectors.toSet())
+        );
+
+        return product;
     }
 
 }

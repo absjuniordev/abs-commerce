@@ -65,7 +65,10 @@ public class OrderController {
                 .created(uri)
                 .body(new OrderResponseDTO(order));
     }
-
+    @Operation(
+            summary = "Update an existing order status",
+            description = "Updates the status of an existing order."
+    )
     @PostMapping(value = "/{id}/status")
     public ResponseEntity<OrderResponseDTO> updateStatus(
             @PathVariable Long id,

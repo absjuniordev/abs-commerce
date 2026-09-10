@@ -1,5 +1,6 @@
 package com.absjrdev.abscommerce.product.application;
 
+import com.absjrdev.abscommerce.exception.BusinessException;
 import com.absjrdev.abscommerce.exception.ResourceNotFoundException;
 import com.absjrdev.abscommerce.product.domain.Product;
 import com.absjrdev.abscommerce.product.repository.ProductRepository;
@@ -25,6 +26,7 @@ public class ProductService {
     }
 
     public Product insert(Product product) {
+        validateCategories(product);
         return productRepository.save(product);
     }
 
@@ -52,6 +54,20 @@ public class ProductService {
         entity.setPrice(product.getPrice());
         entity.setImgUrl(product.getImgUrl());
 
+        validateCategories(product);
 
+        entity.getCategories().clear();
+        entity.getCategories().addAll(product.getCategories());
+    }
+
+    private void validateCategories(Product product) {
+
+        if (product.getCategories() == null
+                || product.getCategories().isEmpty()) {
+
+            throw new BusinessException(
+                    "Product must have at least one category."
+            );
+        }
     }
 }

@@ -9,6 +9,6 @@ public record ProductRequestDTO(
         String description,
         Double price,
         String imgUrl,
-        Set<CategoryResponseDTO> categories
+        Set<Long> categoryIds
 ) {
 }

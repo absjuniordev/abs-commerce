@@ -7,6 +7,7 @@ import com.absjrdev.abscommerce.order.domain.orderStatus.OrderStatus;
 import com.absjrdev.abscommerce.order.dto.UpdateOrderStatusRequestDTO;
 import com.absjrdev.abscommerce.order.repository.OrderRepository;
 import com.absjrdev.abscommerce.payment.domain.Payment;
+import com.absjrdev.abscommerce.payment.domain.paymentMethod.PaymentMethod;
 import com.absjrdev.abscommerce.payment.dto.CreatePaymentRequestDTO;
 import com.absjrdev.abscommerce.payment.repository.PaymentRepository;
 import jakarta.transaction.Transactional;
@@ -37,6 +38,12 @@ public class PaymentService {
         if (order.getOrderStatus() != OrderStatus.WAITING_PAYMENT) {
             throw new BusinessException(
                     "Order is not waiting for payment."
+            );
+        }
+
+        if (request.paymentMethod() == null) {
+            throw new BusinessException(
+                    "Payment method is required."
             );
         }
 
