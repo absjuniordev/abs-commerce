@@ -1,156 +1,349 @@
 # ABS Commerce API
 
-![Java](https://img.shields.io/badge/Java-17-orange)
-![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.x-6DB33F)
-![Maven](https://img.shields.io/badge/Maven-3.9-C71A36)
-![Docker](https://img.shields.io/badge/Docker-Ready-2496ED)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-17-4169E1)
-![H2](https://img.shields.io/badge/H2-Database-blue)
-![Swagger](https://img.shields.io/badge/OpenAPI-Swagger-85EA2D)
-![Status](https://img.shields.io/badge/status-in%20development-yellow)
-![License](https://img.shields.io/badge/license-MIT-blue)
+<p align="center">
+  <img src="https://img.shields.io/badge/Java-17-orange" alt="Java 17">
+  <img src="https://img.shields.io/badge/Spring%20Boot-3.x-brightgreen" alt="Spring Boot 3">
+  <img src="https://img.shields.io/badge/Maven-3.9-blue" alt="Maven">
+  <img src="https://img.shields.io/badge/PostgreSQL-17-blue" alt="PostgreSQL">
+  <img src="https://img.shields.io/badge/H2-Database-lightgrey" alt="H2">
+  <img src="https://img.shields.io/badge/Swagger-OpenAPI-green" alt="Swagger">
+  <img src="https://img.shields.io/badge/Docker-Ready-blue" alt="Docker">
+  <img src="https://img.shields.io/badge/Status-In%20Development-yellow" alt="Project Status">
+</p>
 
----
+## About the Project
 
-# 🚀 About
+**ABS Commerce API** is a RESTful backend application developed with Java and Spring Boot, designed to simulate the core operations of an e-commerce platform.
 
-**ABS Commerce API** is a backend application that simulates a modern e-commerce platform built with **Java** and **Spring Boot**.
+The project provides endpoints for managing users, products, categories, orders, and payments, following a layered architecture and applying object-oriented programming principles.
 
-The project is part of the **ABS — Application Backend Solutions** portfolio and was created to demonstrate enterprise backend development practices, focusing on scalability, clean architecture, maintainability, and real-world business rules.
+This project is part of my backend development portfolio, focused on building maintainable, well-structured, and scalable REST APIs.
 
-Although developed as a learning project, the application follows professional software engineering principles and continues to evolve with new features and infrastructure improvements.
+## Features
 
----
+* User management.
+* Product management with category associations.
+* Category management.
+* Order creation and retrieval.
+* Order status management with business rules.
+* Simulated payment processing.
+* Payment methods: PIX, debit card, and credit card.
+* DTOs for API request and response data.
+* Centralized exception handling.
+* RESTful API architecture.
+* PostgreSQL database integration.
+* H2 database support for testing.
+* API documentation with Swagger / OpenAPI.
+* Docker support.
 
-# ✨ Features
+## Technologies
 
-Current implemented features:
+| Technology        | Purpose                         |
+| ----------------- | ------------------------------- |
+| Java 17           | Main programming language       |
+| Spring Boot 3     | Backend framework               |
+| Spring Data JPA   | Data persistence                |
+| Hibernate         | ORM                             |
+| Maven             | Dependency management and build |
+| PostgreSQL        | Relational database             |
+| H2 Database       | In-memory database for testing  |
+| Swagger / OpenAPI | API documentation               |
+| Docker            | Containerization                |
+| JUnit 5 / Mockito | Automated testing               |
 
-- User Management
-- Product Management
-- Category Management
-- Order Management
-- Payment Association
-- Order Status Management
-- RESTful API
-- Layered Architecture
-- Docker Support
-- PostgreSQL Integration
-- H2 Database for Testing
-- Swagger / OpenAPI Documentation
+## Architecture
 
----
+The application follows a layered architecture, separating responsibilities between the API, business logic, and persistence layers.
 
-# 🏛 Domain Model
+```text
+Controller
+    |
+    v
+DTO <-> Entity
+    |
+    v
+Service
+    |
+    v
+Repository
+    |
+    v
+Database
+```
 
-Main entities:
+### Layers
 
-- User
-- Product
-- Category
-- Order
-- OrderItem
-- Payment
+* **Controller:** Handles HTTP requests, receives request DTOs, converts data between DTOs and entities, and returns response DTOs.
+* **Service:** Contains business logic, validations, and application rules.
+* **Repository:** Handles database access using Spring Data JPA.
+* **Entity:** Represents the application's domain objects and their relationships.
+* **DTO:** Defines the data exposed through API requests and responses.
+* **Exception:** Contains custom exceptions and centralized error handling.
 
-Business rules:
+## Domain Model
 
-- One user can have multiple orders.
-- Orders can contain multiple products.
-- Products belong to multiple categories.
-- Orders may contain payment information.
-- Orders have lifecycle status management.
+The application includes the following main entities:
 
-Order status:
+| Entity    | Description                                             |
+| --------- | ------------------------------------------------------- |
+| User      | Represents users and customers                          |
+| Product   | Represents products available in the store              |
+| Category  | Groups products into categories                         |
+| Order     | Represents customer orders                              |
+| OrderItem | Represents products and quantities within an order      |
+| Payment   | Represents payment information associated with an order |
 
-- WAITING_PAYMENT
-- PAID
-- SHIPPED
-- DELIVERED
-- CANCELED
+### Entity Relationships
 
----
+* A product can belong to multiple categories.
+* A category can contain multiple products.
+* An order belongs to a customer.
+* An order contains one or more order items.
+* Each order item references a product.
+* An order can have an associated payment.
 
-# 🛠 Technologies
+## Business Rules
 
-## Backend
+### Products and Categories
 
-- Java 17
-- Spring Boot 3
-- Spring Data JPA
-- Hibernate
-- Maven
+* Products must be associated with at least one category.
+* Categories associated with a product must exist in the database.
+* Product updates must preserve valid category associations.
 
-## Database
+### Orders
 
-- PostgreSQL (Production)
-- H2 Database (Testing)
+Orders follow a defined status lifecycle.
 
-## Infrastructure
+| Status            | Code | Description                        |
+| ----------------- | ---: | ---------------------------------- |
+| `WAITING_PAYMENT` |    1 | Order created and awaiting payment |
+| `PAID`            |    2 | Payment confirmed                  |
+| `SHIPPED`         |    3 | Order shipped                      |
+| `DELIVERED`       |    4 | Order delivered                    |
+| `CANCELLED`       |    5 | Order cancelled                    |
 
-- Docker
-- Docker Compose
+### Order Status Transitions
 
-## Documentation
+```text
+WAITING_PAYMENT
+    |
+    +----> PAID
+    |        |
+    |        +----> SHIPPED
+    |                  |
+    |                  +----> DELIVERED
+    |
+    +----> CANCELLED
 
-- Swagger / OpenAPI
+PAID ----> CANCELLED
+```
 
----
+The application validates status transitions to prevent invalid state changes.
 
-# 📂 Project Structure
+* Payment confirmation changes the order status to `PAID`.
+* A paid order can be shipped.
+* A shipped order can be marked as delivered.
+* Orders awaiting payment can be cancelled.
+* Paid orders can be cancelled according to the current business rules.
+* `DELIVERED` and `CANCELLED` are terminal statuses.
+
+### Payments
+
+* Payments are associated with orders.
+* The payment method must be valid.
+* Only orders awaiting payment can be paid.
+* Payment processing is simulated and does not integrate with an external payment gateway.
+
+Supported payment methods:
+
+| Method        | Description |
+| ------------- | ----------- |
+| `PIX`         | PIX payment |
+| `DEBIT_CARD`  | Debit card  |
+| `CREDIT_CARD` | Credit card |
+
+## API Endpoints
+
+The following endpoints represent the main resources currently implemented.
+
+### Products
+
+| Method   | Endpoint         | Description              |
+| -------- | ---------------- | ------------------------ |
+| `GET`    | `/products`      | Retrieve all products    |
+| `GET`    | `/products/{id}` | Retrieve a product by ID |
+| `POST`   | `/products`      | Create a product         |
+| `PUT`    | `/products/{id}` | Update a product         |
+| `DELETE` | `/products/{id}` | Delete a product         |
+
+### Categories
+
+| Method   | Endpoint           | Description               |
+| -------- | ------------------ | ------------------------- |
+| `GET`    | `/categories`      | Retrieve all categories   |
+| `GET`    | `/categories/{id}` | Retrieve a category by ID |
+| `POST`   | `/categories`      | Create a category         |
+| `PUT`    | `/categories/{id}` | Update a category         |
+| `DELETE` | `/categories/{id}` | Delete a category         |
+
+### Orders
+
+| Method  | Endpoint              | Description             |
+| ------- | --------------------- | ----------------------- |
+| `GET`   | `/orders`             | Retrieve all orders     |
+| `GET`   | `/orders/{id}`        | Retrieve an order by ID |
+| `POST`  | `/orders`             | Create an order         |
+| `PATCH` | `/orders/{id}/status` | Update the order status |
+
+### Payments
+
+| Method | Endpoint                    | Description                   |
+| ------ | --------------------------- | ----------------------------- |
+| `POST` | `/orders/{orderId}/payment` | Create a payment for an order |
+
+> Note: The endpoint list should be checked against the current controllers before publication.
+
+## Request Examples
+
+### Create a Product
+
+`POST /products`
+
+```json
+{
+  "name": "Smartphone",
+  "description": "A modern smartphone",
+  "price": 1999.99,
+  "imgUrl": "https://example.com/smartphone.jpg",
+  "categoryIds": [1, 2]
+}
+```
+
+### Create an Order
+
+`POST /orders`
+
+```json
+{
+  "client": {
+    "id": 1
+  },
+  "items": [
+    {
+      "product": {
+        "id": 1
+      },
+      "quantity": 2
+    }
+  ]
+}
+```
+
+> The exact request structure depends on the current `OrderRequestDTO` implementation.
+
+### Update Order Status
+
+`PATCH /orders/{id}/status`
+
+```json
+{
+  "status": "SHIPPED"
+}
+```
+
+### Create a Payment
+
+`POST /orders/{orderId}/payment`
+
+```json
+{
+  "paymentMethod": "PIX"
+}
+```
+
+## Exception Handling
+
+The application uses centralized exception handling to return structured error responses.
+
+| Exception                   | HTTP Status     | Description                       |
+| --------------------------- | --------------- | --------------------------------- |
+| `ResourceNotFoundException` | 404 Not Found   | Requested resource does not exist |
+| `BusinessException`         | 400 Bad Request | Business rule violation           |
+| `DatabaseException`         | 400 Bad Request | Database-related error            |
+| Invalid request body        | 400 Bad Request | Invalid JSON or request data      |
+
+### Error Response Example
+
+```json
+{
+  "timestamp": "2026-01-01T12:00:00Z",
+  "status": 404,
+  "error": "Not Found",
+  "message": "Resource not found",
+  "path": "/products/999"
+}
+```
+
+## Project Structure
 
 ```text
 src
 └── main
-    └── java
-        └── com.absjrdev.abscommerce
-            ├── category
-            ├── config
-            ├── exception
-            ├── order
-            ├── orderItem
-            ├── payment.domain
-            ├── product
-            ├── user
-            └── AbsCommerceApplication
+    ├── java
+    │   └── com.absjrdev.abscommerce
+    │       ├── category
+    │       │   ├── application
+    │       │   ├── domain
+    │       │   ├── repository
+    │       │   └── resources
+    │       ├── product
+    │       │   ├── application
+    │       │   ├── domain
+    │       │   ├── repository
+    │       │   └── resources
+    │       ├── user
+    │       ├── order
+    │       ├── orderItem
+    │       ├── payment
+    │       ├── exception
+    │       └── config
+    └── resources
+        └── application.properties
 ```
 
-> As the project evolves, new packages such as DTOs, validation, security, and services will be introduced.
+The package structure is organized by domain modules, separating application services, domain entities, repositories, and REST resources.
 
 ---
 
-# 🏗 Architecture
+Getting Started
+Prerequisites
 
-The project follows a layered architecture.
+Make sure you have the following tools installed:
 
-```text
-Controller
-     │
-     ▼
-Service
-     │
-     ▼
-Repository
-     │
-     ▼
-Database
+Java 17 or later
+Maven 3.9 or later
+PostgreSQL, if using the PostgreSQL profile
+Docker and Docker Compose, if running with containers
+
+Clone the repository.
+
+```bash
+git clone https://github.com/absjrdev/abs-commerce.git
+
+cd abs-commerce
 ```
 
-Design principles:
-
-- Separation of Concerns
-- SOLID Principles
-- Clean Code
-- Layered Architecture
-- Scalability
-- Maintainability
-
 ---
-
-# ⚙ Application Profiles
+## ⚙ Application Profiles
 
 The application currently supports two Spring profiles.
 
-## test
+| Profile | Purpose                 |
+| ------- | ----------------------- |
+| `test`  | H2 database for testing |
+| `prod`  | PostgreSQL database     |
+
+### test
 
 Used during development.
 
@@ -163,14 +356,14 @@ Configuration:
 ```properties
 spring.profiles.active=test
 ```
-## Demo Data
+### Demo Data
 
 When running the application using the `test` profile, the database is automatically populated with sample data.
 
 This allows anyone to test the API immediately without manually creating entities.
 ---
 
-## prod
+### prod
 
 Used for production and Docker environments.
 
@@ -186,15 +379,7 @@ spring.profiles.active=prod
 
 ---
 
-# 🐳 Running with Docker
-
-Clone the repository.
-
-```bash
-git clone https://github.com/absjrdev/abs-commerce.git
-
-cd abs-commerce
-```
+## 🐳 Running with Docker
 
 Create your environment file.
 
@@ -226,7 +411,7 @@ http://localhost:8080/swagger-ui/index.html
 
 ---
 
-# 💻 Running Locally
+## 💻 Running Locally
 
 Requirements:
 
@@ -241,7 +426,7 @@ Run:
 
 ---
 
-# 🔑 Environment Variables
+## 🔑 Environment Variables
 
 Example:
 
@@ -263,7 +448,7 @@ SPRING_DATASOURCE_PASSWORD=postgres
 
 ---
 
-# 📖 API Documentation
+## 📖 API Documentation
 
 The API is documented using Swagger / OpenAPI.
 
@@ -284,46 +469,74 @@ http://localhost:8080/swagger-ui/index.html
 ![Products](docs/images/swagger-products.png)
 ---
 
-# 🗄 Database
+## 🗄 Database
 
 PostgreSQL database running inside Docker.
 
 ![Database](docs/images/database.png)
-
-# 📈 Roadmap
-
-## Completed
-
-- REST API
-- Spring Boot
-- PostgreSQL
-- H2 Database
-- Docker
-- Docker Compose
-- Swagger
-- Entity Relationships
-
-## In Progress
-
-- DTO Layer
-- Validation
-- JWT Authentication
-- Exception Handling Improvements
-- Unit Tests
-- Integration Tests
-
-## Planned
-
-- GitHub Actions (CI/CD)
-- Docker Hub Automated Builds
-- Kubernetes
-- Cloud Deployment
-- Monitoring
-- Logging Improvements
-
 ---
 
-# 👨‍💻 Author
+## Testing
+
+Automated tests are part of the project's development roadmap.
+
+The planned test coverage includes:
+
+* Service unit tests with JUnit 5 and Mockito.
+* Controller tests with MockMvc.
+* Integration tests for persistence and business rules.
+* Validation of order status transitions.
+* Product and category association validation.
+* Payment processing scenarios.
+* Exception handling and invalid request scenarios.
+
+Run the test suite using:
+
+```bash
+./mvnw test
+```
+
+## Roadmap
+
+### Completed
+
+* [x] Initial Spring Boot project setup.
+* [x] Layered application architecture.
+* [x] User, product, and category management.
+* [x] Order creation and retrieval.
+* [x] Order status lifecycle.
+* [x] Payment method modeling.
+* [x] Simulated payment processing.
+* [x] DTO-based API requests and responses.
+* [x] Centralized exception handling.
+
+### In Progress
+
+* [ ] Automated unit and integration tests.
+* [ ] Additional validation and edge-case coverage.
+* [ ] Final API documentation review.
+
+### Planned
+
+* [ ] Authentication and authorization with JWT.
+* [ ] CI/CD pipeline.
+* [ ] Docker image publishing.
+* [ ] Cloud deployment.
+* [ ] Monitoring and logging improvements.
+
+## Future Improvements
+
+Potential future enhancements include:
+
+* Integration with a real payment gateway.
+* Inventory management.
+* Shipping and delivery management.
+* Shopping cart functionality.
+* Product search and filtering.
+* Pagination and sorting.
+* Advanced security and access control.
+
+## 👨‍💻 Author
 
 Developed by **Arnaldo Borges dos Santos Junior**
 
@@ -339,6 +552,6 @@ A personal portfolio focused on building modern backend applications with Java, 
 
 ---
 
-# 📄 License
+## 📄 License
 
 This project is licensed under the MIT License and is available for learning and educational purposes.
