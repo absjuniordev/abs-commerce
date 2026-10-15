@@ -328,7 +328,7 @@ Docker and Docker Compose, if running with containers
 Clone the repository.
 
 ```bash
-git clone https://github.com/absjrdev/abs-commerce.git
+git clone https://github.com/absjuniordev/abs-commerce.git
 
 cd abs-commerce
 ```
